@@ -1,78 +1,56 @@
 package com.example.architectureapplication;
 
-import androidx.annotation.Nullable;
+import android.content.Intent;
+import android.os.Bundle;
+import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Toast;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import java.util.List;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static final int ADD_NOTE_REQ = 1;
     private NoteViewModel noteViewModel;
+
+    @BindView(R.id.rv_notes)
+    public RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        RecyclerView recyclerView = findViewById(R.id.rv_notes);
+        ButterKnife.bind(this);
+
         recyclerView.setHasFixedSize(true);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        final NoteAdapter adapter = new NoteAdapter();
-        recyclerView.setAdapter(adapter);
-
-        FloatingActionButton button = findViewById(R.id.btn_add_notes);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this,AddNoteActivity.class);
-                startActivityForResult(intent,ADD_NOTE_REQ);
-            }
+        final NoteAdapter adapter = new NoteAdapter((note, position) -> {
+            Toast.makeText(this, note.getTitle(), Toast.LENGTH_SHORT).show();
         });
+        recyclerView.setAdapter(adapter);
 
         noteViewModel = ViewModelProvider.AndroidViewModelFactory.
                 getInstance(getApplication()).create(NoteViewModel.class);
 
-        noteViewModel.getAllNotes().observe(this, new Observer<List<Note>>() {
-            @Override
-            public void onChanged(List<Note> notes) {
-                //Update recycler view
-                Toast.makeText(MainActivity.this, "onChanged", Toast.LENGTH_SHORT).show();
+        noteViewModel.getAllNotes().observe(this, notes -> {
+            //Update recycler view
+            Toast.makeText(MainActivity.this, "onChanged", Toast.LENGTH_SHORT).show();
 
-                adapter.setNotes(notes);
-            }
+            adapter.setNotes(notes);
         });
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if(requestCode == ADD_NOTE_REQ && resultCode == RESULT_OK){
-            String title = data.getStringExtra(AddNoteActivity.EXTRA_TITLE);
-            String desc = data.getStringExtra(AddNoteActivity.EXTRA_DESC);
-            int priority = data.getIntExtra(AddNoteActivity.EXTRA_PRIORITY,1);
-
-            Note note = new Note(title, desc, priority);
-            noteViewModel.insert(note);
-
-            Toast.makeText(this, "Note Added", Toast.LENGTH_SHORT).show();
-        }else{
-            Toast.makeText(this, "Note not saved", Toast.LENGTH_SHORT).show();
-        }
+    @OnClick(R.id.btn_add_notes)
+    public void addNote() {
+        Intent intent = new Intent(MainActivity.this, AddNoteActivity.class);
+        startActivity(intent);
     }
+
 }
