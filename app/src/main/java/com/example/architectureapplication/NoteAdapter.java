@@ -11,15 +11,23 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder> {
 
     private List<Note> notes = new ArrayList<>();
+    private OnItemClicked mListener;
+
+    public NoteAdapter(OnItemClicked listener) {
+        mListener = listener;
+    }
 
     @NonNull
     @Override
     public NoteViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.note_item, parent, false);
-        return new NoteViewHolder(view);
+        return new NoteViewHolder(view,mListener);
     }
 
     @Override
@@ -39,22 +47,31 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
 
     class NoteViewHolder extends RecyclerView.ViewHolder{
 
-        private TextView title;
-        private TextView priority;
-        private TextView description;
+        @BindView(R.id.tv_title)
+        TextView title;
+        @BindView(R.id.tv_priority)
+        TextView priority;
+        @BindView(R.id.tv_description)
+        TextView description;
 
+        private OnItemClicked mListener;
 
-        public NoteViewHolder(@NonNull View itemView) {
+        NoteViewHolder(@NonNull View itemView, OnItemClicked listener) {
             super(itemView);
-            title = itemView.findViewById(R.id.tv_title);
-            priority = itemView.findViewById(R.id.tv_priority);
-            description = itemView.findViewById(R.id.tv_description);
+            ButterKnife.bind(this,itemView);
+            mListener = listener;
         }
 
-        public void bind(Note note){
+        void bind(Note note){
             title.setText(note.getTitle());
             priority.setText(String.valueOf(note.getPriority()));
             description.setText(note.getDescription());
+
+            itemView.setOnClickListener(view -> mListener.onClick(note,getAdapterPosition()));
         }
+    }
+
+    interface OnItemClicked{
+        void onClick(Note note, int position);
     }
 }

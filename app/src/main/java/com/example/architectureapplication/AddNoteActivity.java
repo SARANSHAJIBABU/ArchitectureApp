@@ -1,6 +1,7 @@
 package com.example.architectureapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,11 +21,14 @@ public class AddNoteActivity extends AppCompatActivity {
     private EditText editTextTitle;
     private EditText editTextDesc;
     private NumberPicker numberPicker;
+    private AddNoteViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_note);
+
+        viewModel = ViewModelProvider.AndroidViewModelFactory.getInstance(getApplication()).create(AddNoteViewModel.class);
 
         editTextDesc = findViewById(R.id.et_desc);
         editTextTitle = findViewById(R.id.et_title);
@@ -69,7 +73,9 @@ public class AddNoteActivity extends AppCompatActivity {
             intent.putExtra(EXTRA_DESC,description);
             intent.putExtra(EXTRA_PRIORITY,priority);
 
-            setResult(RESULT_OK,intent);
+            Note note = new Note(title,description,priority);
+            viewModel.insert(note);
+
             finish();
         }
     }
