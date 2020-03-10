@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        ((NoteApp)getApplication()).getAppComponent().inject(this);
+        ((NoteApp)getApplication()).getAppComponent().mainComponent().build().inject(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 

@@ -3,12 +3,13 @@ package com.example.architectureapplication;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModel;
 
 import java.util.List;
 
 import javax.inject.Inject;
 
-public class NoteViewModel {
+public class NoteViewModel extends ViewModel {
     private NoteRepository noteRepository;
     private LiveData<List<Note>> allNotes;
 
@@ -39,4 +40,11 @@ public class NoteViewModel {
     public LiveData<List<Note>> getAllNotes() {
         return allNotes;
     }
+
+    @Override
+    protected void onCleared() {
+        super.onCleared();
+        Log.d("TEST","Clearing NoteViewModel");
+    }
+
 }

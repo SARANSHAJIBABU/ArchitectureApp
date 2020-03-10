@@ -11,7 +11,7 @@ import dagger.BindsInstance;
 import dagger.Component;
 
 @Singleton
-@Component(modules = {AppModule.class})
+@Component(modules = {AppModule.class, AppSubComponents.class})
 public interface AppComponent {
 
     @Component.Builder
@@ -23,7 +23,7 @@ public interface AppComponent {
         AppComponent build();
     }
 
-    void inject(MainActivity mainActivity);
 
-    void inject(AddNoteActivity addNoteActivity);
+    MainComponent.Builder mainComponent();
+    AddNoteComponent.Builder addNoteComponent();
 }

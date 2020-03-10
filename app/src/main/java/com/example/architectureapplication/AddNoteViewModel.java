@@ -2,9 +2,11 @@ package com.example.architectureapplication;
 
 import android.util.Log;
 
+import androidx.lifecycle.ViewModel;
+
 import javax.inject.Inject;
 
-public class AddNoteViewModel{
+public class AddNoteViewModel extends ViewModel {
 
     private NoteRepository noteRepository;
 
@@ -16,5 +18,11 @@ public class AddNoteViewModel{
 
     public void insert(Note note){
         noteRepository.insert(note);
+    }
+
+    @Override
+    protected void onCleared() {
+        super.onCleared();
+        Log.d("TEST","Clearing AddNoteViewModel");
     }
 }

@@ -29,7 +29,7 @@ public class AddNoteActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        ((NoteApp)getApplication()).getAppComponent().inject(this);
+        ((NoteApp)getApplication()).getAppComponent().addNoteComponent().build().inject(this);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_note);
