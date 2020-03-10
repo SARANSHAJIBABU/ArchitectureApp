@@ -12,6 +12,8 @@ import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.Toast;
 
+import javax.inject.Inject;
+
 public class AddNoteActivity extends AppCompatActivity {
 
     public static final String EXTRA_TITLE = "com.example.architectureapplication.EXTRA_TITLE";
@@ -21,14 +23,16 @@ public class AddNoteActivity extends AppCompatActivity {
     private EditText editTextTitle;
     private EditText editTextDesc;
     private NumberPicker numberPicker;
-    private AddNoteViewModel viewModel;
+
+    @Inject
+    AddNoteViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        ((NoteApp)getApplication()).getAppComponent().inject(this);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_note);
-
-        viewModel = ViewModelProvider.AndroidViewModelFactory.getInstance(getApplication()).create(AddNoteViewModel.class);
 
         editTextDesc = findViewById(R.id.et_desc);
         editTextTitle = findViewById(R.id.et_title);

@@ -1,17 +1,17 @@
 package com.example.architectureapplication;
 
-import android.app.Application;
+import android.util.Log;
 
-import androidx.annotation.NonNull;
-import androidx.lifecycle.AndroidViewModel;
+import javax.inject.Inject;
 
-public class AddNoteViewModel extends AndroidViewModel {
+public class AddNoteViewModel{
 
     private NoteRepository noteRepository;
 
-    public AddNoteViewModel(@NonNull Application application) {
-        super(application);
-        noteRepository = new NoteRepository(application);
+    @Inject
+    public AddNoteViewModel(NoteRepository repository) {
+        noteRepository = repository;
+        Log.d("TEST","Creating AddNoteViewModel");
     }
 
     public void insert(Note note){
