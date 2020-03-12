@@ -2,9 +2,6 @@ package com.example.architectureapplication.di;
 
 import android.app.Application;
 
-import com.example.architectureapplication.AddNoteActivity;
-import com.example.architectureapplication.MainActivity;
-
 import javax.inject.Singleton;
 
 import dagger.BindsInstance;
