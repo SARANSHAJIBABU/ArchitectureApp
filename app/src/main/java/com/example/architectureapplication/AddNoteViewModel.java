@@ -16,7 +16,7 @@ public class AddNoteViewModel extends ViewModel {
         Log.d("TEST","Creating AddNoteViewModel");
     }
 
-    public void insert(Note note){
+    public void insert(NoteKt note){
         noteRepository.insert(note);
     }
 

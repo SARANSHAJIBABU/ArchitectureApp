@@ -11,7 +11,7 @@ import javax.inject.Inject;
 
 public class NoteViewModel extends ViewModel {
     private NoteRepository noteRepository;
-    private LiveData<List<Note>> allNotes;
+    private LiveData<List<NoteKt>> allNotes;
 
 
     @Inject
@@ -21,15 +21,15 @@ public class NoteViewModel extends ViewModel {
         allNotes = noteRepository.getAllNotes();
     }
 
-    public void insert(Note note){
+    public void insert(NoteKt note){
         noteRepository.insert(note);
     }
 
-    public void update(Note note){
+    public void update(NoteKt note){
         noteRepository.update(note);
     }
 
-    public void delete(Note note) {
+    public void delete(NoteKt note) {
         noteRepository.delete(note);
     }
 
@@ -37,7 +37,7 @@ public class NoteViewModel extends ViewModel {
         noteRepository.deleteAllNotes();
     }
 
-    public LiveData<List<Note>> getAllNotes() {
+    public LiveData<List<NoteKt>> getAllNotes() {
         return allNotes;
     }
 

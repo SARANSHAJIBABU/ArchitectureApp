@@ -2,8 +2,8 @@ package com.example.architectureapplication.di;
 
 import android.app.Application;
 
-import com.example.architectureapplication.NoteDao;
-import com.example.architectureapplication.NoteDatabase;
+import com.example.architectureapplication.NoteDaoKt;
+import com.example.architectureapplication.NoteDatabaseKt;
 
 import javax.inject.Singleton;
 
@@ -15,13 +15,13 @@ public class AppModule {
 
     @Singleton
     @Provides
-    public NoteDatabase provideDb(Application application){
-        return NoteDatabase.getInstance(application);
+    public NoteDatabaseKt provideDb(Application application){
+        return NoteDatabaseKt.Companion.getInstance(application);
     }
 
     @Singleton
     @Provides
-    public NoteDao provideNoteDao(NoteDatabase db){
+    public NoteDaoKt provideNoteDao(NoteDatabaseKt db){
         return db.noteDao();
     }
 

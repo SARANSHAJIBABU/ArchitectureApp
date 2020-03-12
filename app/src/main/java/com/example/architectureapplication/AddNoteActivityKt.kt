@@ -62,7 +62,7 @@ class AddNoteActivityKt : AppCompatActivity() {
         if (title.isEmpty() || description.isEmpty()) {
             Toast.makeText(this, "Invalid input", Toast.LENGTH_SHORT).show()
         } else {
-            val note = Note(title, description, priority)
+            val note = NoteKt(title, description, priority)
             viewModel.insert(note)
             finish()
         }

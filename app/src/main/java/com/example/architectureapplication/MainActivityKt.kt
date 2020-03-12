@@ -29,7 +29,7 @@ class MainActivityKt : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val noteAdapter = NoteAdapterKt(object: NoteAdapterKt.OnItemClicked{
-            override fun onClick(note: Note, position: Int) {
+            override fun onClick(note: NoteKt, position: Int) {
                 Toast.makeText(this@MainActivityKt, note.title, Toast.LENGTH_SHORT).show()
             }
         })
