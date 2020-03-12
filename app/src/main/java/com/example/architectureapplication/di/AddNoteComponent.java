@@ -1,6 +1,7 @@
 package com.example.architectureapplication.di;
 
 import com.example.architectureapplication.AddNoteActivity;
+import com.example.architectureapplication.AddNoteActivityKt;
 import com.example.architectureapplication.MainActivity;
 
 import dagger.Subcomponent;
@@ -14,5 +15,6 @@ public interface AddNoteComponent {
     }
 
     void inject(AddNoteActivity addNoteActivity);
+    void inject(AddNoteActivityKt addNoteActivity);
 }
 

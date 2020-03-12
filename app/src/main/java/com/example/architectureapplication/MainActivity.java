@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
 
     @OnClick(R.id.btn_add_notes)
     public void addNote() {
-        Intent intent = new Intent(MainActivity.this, AddNoteActivity.class);
+        Intent intent = new Intent(MainActivity.this, AddNoteActivityKt.class);
         startActivity(intent);
     }
 

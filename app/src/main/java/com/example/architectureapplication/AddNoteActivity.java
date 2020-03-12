@@ -16,10 +16,6 @@ import javax.inject.Inject;
 
 public class AddNoteActivity extends AppCompatActivity {
 
-    public static final String EXTRA_TITLE = "com.example.architectureapplication.EXTRA_TITLE";
-    public static final String EXTRA_DESC = "com.example.architectureapplication.EXTRA_DESC";
-    public static final String EXTRA_PRIORITY = "com.example.architectureapplication.EXTRA_PRIORITY";
-
     private EditText editTextTitle;
     private EditText editTextDesc;
     private NumberPicker numberPicker;
@@ -72,11 +68,6 @@ public class AddNoteActivity extends AppCompatActivity {
         if(title.isEmpty() || description.isEmpty()){
             Toast.makeText(this, "Invalid input", Toast.LENGTH_SHORT).show();
         }else {
-            Intent intent = new Intent();
-            intent.putExtra(EXTRA_TITLE,title);
-            intent.putExtra(EXTRA_DESC,description);
-            intent.putExtra(EXTRA_PRIORITY,priority);
-
             Note note = new Note(title,description,priority);
             viewModel.insert(note);
 
