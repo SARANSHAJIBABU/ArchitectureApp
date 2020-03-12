@@ -1,6 +1,7 @@
 package com.example.architectureapplication.di;
 
 import com.example.architectureapplication.MainActivity;
+import com.example.architectureapplication.MainActivityKt;
 
 import dagger.Subcomponent;
 
@@ -13,4 +14,5 @@ public interface MainComponent {
     }
 
     void inject(MainActivity mainActivity);
+    void inject(MainActivityKt mainActivity);
 }

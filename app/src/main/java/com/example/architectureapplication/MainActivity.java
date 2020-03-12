@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        final NoteAdapter adapter = new NoteAdapter((note, position) -> {
+        final NoteAdapter adapter = new NoteAdapter((Note note, int position) -> {
             Toast.makeText(this, note.getTitle(), Toast.LENGTH_SHORT).show();
         });
         recyclerView.setAdapter(adapter);
