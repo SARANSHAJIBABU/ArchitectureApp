@@ -2,8 +2,9 @@ package com.example.architectureapplication;
 
 import android.app.Application;
 
-import com.example.architectureapplication.di.AppComponent;
-import com.example.architectureapplication.di.DaggerAppComponent;
+import com.example.architectureapplication.kt.AppComponent;
+import com.example.architectureapplication.kt.DaggerAppComponent;
+
 
 public class NoteApp extends Application {
 
