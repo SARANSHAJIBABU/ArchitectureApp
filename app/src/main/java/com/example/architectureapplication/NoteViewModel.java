@@ -1,21 +1,23 @@
 package com.example.architectureapplication;
 
-import android.app.Application;
+import android.util.Log;
 
-import androidx.annotation.NonNull;
-import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModel;
 
 import java.util.List;
 
-public class NoteViewModel extends AndroidViewModel {
+import javax.inject.Inject;
+
+public class NoteViewModel extends ViewModel {
     private NoteRepository noteRepository;
     private LiveData<List<Note>> allNotes;
 
 
-    public NoteViewModel(@NonNull Application application) {
-        super(application);
-        noteRepository = new NoteRepository(application);
+    @Inject
+    public NoteViewModel(NoteRepository repository) {
+        Log.d("TEST","Creating NoteViewModel");
+        noteRepository = repository;
         allNotes = noteRepository.getAllNotes();
     }
 
@@ -38,4 +40,11 @@ public class NoteViewModel extends AndroidViewModel {
     public LiveData<List<Note>> getAllNotes() {
         return allNotes;
     }
+
+    @Override
+    protected void onCleared() {
+        super.onCleared();
+        Log.d("TEST","Clearing NoteViewModel");
+    }
+
 }

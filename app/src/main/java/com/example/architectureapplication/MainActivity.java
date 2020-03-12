@@ -5,9 +5,10 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -15,13 +16,15 @@ import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity {
 
-    private NoteViewModel noteViewModel;
+    @Inject
+    NoteViewModel noteViewModel;
 
     @BindView(R.id.rv_notes)
     public RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        ((NoteApp)getApplication()).getAppComponent().mainComponent().build().inject(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -35,9 +38,6 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, note.getTitle(), Toast.LENGTH_SHORT).show();
         });
         recyclerView.setAdapter(adapter);
-
-        noteViewModel = ViewModelProvider.AndroidViewModelFactory.
-                getInstance(getApplication()).create(NoteViewModel.class);
 
         noteViewModel.getAllNotes().observe(this, notes -> {
             //Update recycler view
