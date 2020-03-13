@@ -1,6 +1,8 @@
 package com.example.architectureapplication
 
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -20,6 +22,21 @@ class AddNoteActivity : AppCompatActivity() {
     @Inject
     lateinit var viewModel: AddNoteViewModel
 
+    companion object{
+        val SELECTED_NOTE = "selected_note"
+
+        fun getIntent(context: Context, note:Note?=null): Intent{
+            val intent = Intent(context,AddNoteActivity::class.java)
+
+            return if(note==null)
+                intent
+            else
+                intent.apply {
+                            putExtra(SELECTED_NOTE,note)
+                        }
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         (application as NoteApp).run {
             appComponent.addNoteComponent().build().inject(this@AddNoteActivity)
@@ -27,6 +44,12 @@ class AddNoteActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_note)
 
+        setupViews()
+
+        setupAppBar()
+    }
+
+    private fun setupViews() {
         editTextTitle = et_title
         editTextDesc = et_desc
         numberPicker = np_picker
@@ -36,7 +59,12 @@ class AddNoteActivity : AppCompatActivity() {
             minValue = 1
         }
 
-        setupAppBar()
+        if(intent.hasExtra(SELECTED_NOTE)){
+            val note: Note = intent.getParcelableExtra(SELECTED_NOTE)
+            editTextTitle.setText(note.title)
+            editTextDesc.setText(note.description)
+            numberPicker.value = note.priority
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -63,7 +91,14 @@ class AddNoteActivity : AppCompatActivity() {
             Toast.makeText(this, "Invalid input", Toast.LENGTH_SHORT).show()
         } else {
             val note = Note(title, description, priority)
-            viewModel.insert(note)
+
+            if(intent.hasExtra(SELECTED_NOTE)){
+                note.id = (intent.getParcelableExtra(SELECTED_NOTE) as Note).id
+                viewModel.update(note)
+            }else{
+                viewModel.insert(note)
+            }
+
             finish()
         }
     }
@@ -72,6 +107,9 @@ class AddNoteActivity : AppCompatActivity() {
     private fun setupAppBar() {
         supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_close_black_24dp)
         title = "Add Note"
+        if(intent.hasExtra(SELECTED_NOTE)){
+            title = "Edit Note"
+        }
     }
 
 }

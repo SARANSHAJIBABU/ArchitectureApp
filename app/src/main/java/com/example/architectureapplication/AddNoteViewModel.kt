@@ -8,4 +8,6 @@ class AddNoteViewModel @Inject constructor(val noteRepository: NoteRepository)
 
     fun insert(note:Note) = noteRepository.insert(note)
 
+    fun update(note:Note) = noteRepository.update(note)
+
 }
