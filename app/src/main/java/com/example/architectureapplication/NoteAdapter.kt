@@ -25,6 +25,8 @@ class NoteAdapter(val listener:OnItemClicked): RecyclerView.Adapter<NoteAdapter.
         holder.bind(notes[position])
     }
 
+    fun getNoteAt(position: Int):Note = notes[position]
+
     inner class NoteViewHolder(itemView: View, val listener:OnItemClicked):
             RecyclerView.ViewHolder(itemView){
 
