@@ -4,20 +4,20 @@ import androidx.lifecycle.LiveData
 import androidx.room.*
 
 @Dao
-interface NoteDaoKt {
+interface NoteDao {
 
     @Insert
-    fun insert(note: NoteKt)
+    fun insert(note: Note)
 
     @Update
-    fun update(note: NoteKt)
+    fun update(note: Note)
 
     @Delete
-    fun delete(note: NoteKt)
+    fun delete(note: Note)
 
     @Query("DELETE FROM note_table")
     fun deleteAllNotes()
 
     @Query("SELECT * FROM note_table ORDER BY note_priority DESC")
-    fun getNotes(): LiveData<List<NoteKt>>
+    fun getNotes(): LiveData<List<Note>>
 }

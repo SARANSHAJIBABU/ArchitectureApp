@@ -7,15 +7,15 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 
-@Database(entities = arrayOf(NoteKt::class), version = 1)
-abstract class NoteDatabaseKt: RoomDatabase(){
+@Database(entities = arrayOf(Note::class), version = 1)
+abstract class NoteDatabase: RoomDatabase(){
 
     companion object{
 
         @Volatile
-        private var INSTANCE: NoteDatabaseKt? = null
+        private var INSTANCE: NoteDatabase? = null
 
-        fun getInstance(context: Context): NoteDatabaseKt{
+        fun getInstance(context: Context): NoteDatabase{
             val tempInstance = INSTANCE
 
             if(tempInstance!=null)
@@ -24,7 +24,7 @@ abstract class NoteDatabaseKt: RoomDatabase(){
             synchronized(this){
                 val instance = Room.databaseBuilder(
                         context.applicationContext,
-                        NoteDatabaseKt::class.java,
+                        NoteDatabase::class.java,
                         "note_database")
                         .addCallback(
                                 object : RoomDatabase.Callback() {
@@ -44,16 +44,16 @@ abstract class NoteDatabaseKt: RoomDatabase(){
         }
 
     }
-    abstract fun noteDao(): NoteDaoKt
+    abstract fun noteDao(): NoteDao
 
-    class PopulateDbAsyncTask(database: NoteDatabaseKt) : AsyncTask<Void, Void, Void>() {
+    class PopulateDbAsyncTask(database: NoteDatabase) : AsyncTask<Void, Void, Void>() {
 
-        val dao: NoteDaoKt = database.noteDao()
+        val dao: NoteDao = database.noteDao()
 
         override fun doInBackground(vararg p0: Void?): Void? {
-            dao.insert(NoteKt("Title1","Description1",1))
-            dao.insert(NoteKt("Title2","Description2",2))
-            dao.insert(NoteKt("Title3","Description3",3))
+            dao.insert(Note("Title1","Description1",1))
+            dao.insert(Note("Title2","Description2",2))
+            dao.insert(Note("Title3","Description3",3))
             return null
         }
 

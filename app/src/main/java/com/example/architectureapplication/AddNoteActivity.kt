@@ -11,18 +11,18 @@ import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_add_note.*
 import javax.inject.Inject
 
-class AddNoteActivityKt : AppCompatActivity() {
+class AddNoteActivity : AppCompatActivity() {
 
     private lateinit var editTextTitle: EditText
     private lateinit var editTextDesc: EditText
     private lateinit var numberPicker: NumberPicker
 
     @Inject
-    lateinit var viewModel: AddNoteViewModelKt
+    lateinit var viewModel: AddNoteViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        (application as NoteAppKt).run {
-            appComponent.addNoteComponent().build().inject(this@AddNoteActivityKt)
+        (application as NoteApp).run {
+            appComponent.addNoteComponent().build().inject(this@AddNoteActivity)
         }
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_note)
@@ -62,7 +62,7 @@ class AddNoteActivityKt : AppCompatActivity() {
         if (title.isEmpty() || description.isEmpty()) {
             Toast.makeText(this, "Invalid input", Toast.LENGTH_SHORT).show()
         } else {
-            val note = NoteKt(title, description, priority)
+            val note = Note(title, description, priority)
             viewModel.insert(note)
             finish()
         }

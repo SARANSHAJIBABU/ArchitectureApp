@@ -1,11 +1,11 @@
 package com.example.architectureapplication.kt
 
-import com.example.architectureapplication.AddNoteActivityKt
+import com.example.architectureapplication.AddNoteActivity
 import dagger.Subcomponent
 
 @Subcomponent
 interface AddNoteComponent {
-    fun inject(activityKt: AddNoteActivityKt)
+    fun inject(activityKt: AddNoteActivity)
 
     @Subcomponent.Builder
     interface Builder{

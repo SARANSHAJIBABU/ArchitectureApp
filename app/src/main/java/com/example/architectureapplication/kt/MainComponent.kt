@@ -1,11 +1,11 @@
 package com.example.architectureapplication.kt
 
-import com.example.architectureapplication.MainActivityKt
+import com.example.architectureapplication.MainActivity
 import dagger.Subcomponent
 
 @Subcomponent
 interface MainComponent {
-    fun inject(mainActivityKt: MainActivityKt)
+    fun inject(MainActivity: MainActivity)
 
     @Subcomponent.Builder
     interface Builder{

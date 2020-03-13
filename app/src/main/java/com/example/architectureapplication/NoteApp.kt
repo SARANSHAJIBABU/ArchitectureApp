@@ -3,7 +3,7 @@ package com.example.architectureapplication
 import android.app.Application
 import com.example.architectureapplication.kt.DaggerAppComponent
 
-class NoteAppKt: Application(){
+class NoteApp: Application(){
 
     val appComponent by lazy {
         DaggerAppComponent.builder()

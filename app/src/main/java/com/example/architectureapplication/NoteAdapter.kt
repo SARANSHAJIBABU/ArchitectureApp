@@ -6,9 +6,9 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class NoteAdapterKt(val listener:OnItemClicked): RecyclerView.Adapter<NoteAdapterKt.NoteViewHolder>() {
+class NoteAdapter(val listener:OnItemClicked): RecyclerView.Adapter<NoteAdapter.NoteViewHolder>() {
 
-    var notes = mutableListOf<NoteKt>()
+    var notes = mutableListOf<Note>()
         set(value) {
             field = value
             notifyDataSetChanged()
@@ -38,7 +38,7 @@ class NoteAdapterKt(val listener:OnItemClicked): RecyclerView.Adapter<NoteAdapte
             itemView.findViewById<TextView>(R.id.tv_description)
         }
 
-        fun bind(note: NoteKt){
+        fun bind(note: Note){
             title.text = note.title
             priority.text = note.priority.toString()
             description.text = note.description
@@ -50,7 +50,7 @@ class NoteAdapterKt(val listener:OnItemClicked): RecyclerView.Adapter<NoteAdapte
     }
 
     interface OnItemClicked{
-        fun onClick(note:NoteKt, position:Int)
+        fun onClick(note:Note, position:Int)
     }
 
 }

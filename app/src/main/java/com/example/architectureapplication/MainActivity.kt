@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
-class MainActivityKt : AppCompatActivity() {
+class MainActivity : AppCompatActivity() {
 
     @Inject
     lateinit var noteViewModel: NotesViewModel
@@ -21,22 +21,22 @@ class MainActivityKt : AppCompatActivity() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        (application as NoteAppKt).run {
-            appComponent.mainComponent().build().inject(this@MainActivityKt)
+        (application as NoteApp).run {
+            appComponent.mainComponent().build().inject(this@MainActivity)
         }
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val noteAdapter = NoteAdapterKt(object: NoteAdapterKt.OnItemClicked{
-            override fun onClick(note: NoteKt, position: Int) {
-                Toast.makeText(this@MainActivityKt, note.title, Toast.LENGTH_SHORT).show()
+        val noteAdapter = NoteAdapter(object: NoteAdapter.OnItemClicked{
+            override fun onClick(note: Note, position: Int) {
+                Toast.makeText(this@MainActivity, note.title, Toast.LENGTH_SHORT).show()
             }
         })
 
         recyclerView.apply {
             setHasFixedSize(true)
-            layoutManager = LinearLayoutManager(this@MainActivityKt)
+            layoutManager = LinearLayoutManager(this@MainActivity)
             adapter = noteAdapter
         }
 
@@ -46,7 +46,7 @@ class MainActivityKt : AppCompatActivity() {
         })
 
         btn_add_notes.setOnClickListener {
-            val intent = Intent(this,AddNoteActivityKt::class.java)
+            val intent = Intent(this,AddNoteActivity::class.java)
             startActivity(intent)
         }
     }
