@@ -13,7 +13,7 @@ import javax.inject.Inject
 class MainActivityKt : AppCompatActivity() {
 
     @Inject
-    lateinit var noteViewModel: NoteViewModel
+    lateinit var noteViewModel: NotesViewModel
 
     val recyclerView by lazy {
         findViewById<RecyclerView>(R.id.rv_notes)
@@ -21,7 +21,7 @@ class MainActivityKt : AppCompatActivity() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        (application as NoteApp).run {
+        (application as NoteAppKt).run {
             appComponent.mainComponent().build().inject(this@MainActivityKt)
         }
 
@@ -40,9 +40,9 @@ class MainActivityKt : AppCompatActivity() {
             adapter = noteAdapter
         }
 
-        noteViewModel.allNotes.observe(this, Observer {
+        noteViewModel.getAllNotes().observe(this, Observer {
             Toast.makeText(this, "onChanged", Toast.LENGTH_SHORT).show()
-            noteAdapter.notes = it
+            noteAdapter.notes = it.toMutableList()
         })
 
         btn_add_notes.setOnClickListener {

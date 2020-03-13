@@ -18,10 +18,10 @@ class AddNoteActivityKt : AppCompatActivity() {
     private lateinit var numberPicker: NumberPicker
 
     @Inject
-    lateinit var viewModel: AddNoteViewModel
+    lateinit var viewModel: AddNoteViewModelKt
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        (application as NoteApp).run {
+        (application as NoteAppKt).run {
             appComponent.addNoteComponent().build().inject(this@AddNoteActivityKt)
         }
         super.onCreate(savedInstanceState)
